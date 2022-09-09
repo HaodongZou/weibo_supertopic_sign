@@ -1,8 +1,13 @@
 # 基于Python的微博超话签到脚本
+
+> 更新：支持青龙面板，前往[nodejs分支](https://github.com/Hellager/weibo_supertopic_sign/tree/nodejs)查看教程 
+
+> 重要！：微博国际版升级为轻享版后无法抓包获取相关请求，请使用低版本进行抓包
+
 ## 项目简介
 1. 基于Python实现微博超话关注列表的获取及签到
 2. 根据签到结果选择不同渠道进行通知(钉钉, 微信, QQ)
-3. 可通过Github Actions 实现云端定期执行
+3. 可通过腾讯云或阿里云实现每日定期签到
 
 ## 文件结构
 weibo_supertopic_sign/ <br>
@@ -19,6 +24,12 @@ weibo_supertopic_sign/ <br>
 | -- requirements.txt -> 安装依赖时所用文本<br>
 | -- supertopicsign.py -> 微博超话关注列表的获取及签到<br>
 | -- utils.py -> 系统打印设置<br>
+
+## 抓包说明
+  * 打开 **微博国际版** -> **关注的超话** -> **超话社区**
+  * 开始抓包 -> 超话社区界面下拉刷新 -> 停止抓包
+  * 在 **会话记录** 中 搜索 **cardlist** 点进去即可得到 ROW_URL 参数
+[![IUVcLT.png](https://z3.ax1x.com/2021/11/10/IUVcLT.png)](https://imgtu.com/i/IUVcLT)
 
 ## 参数说明
 |变量名称|变量含义  |
@@ -52,15 +63,6 @@ weibo_supertopic_sign/ <br>
     * 进入 **函数管理** -> **函数配置** -> 设置**执行超时时间** -> 设置**环境变量** <br>
     * 进入 **触发管理** -> **创建触发器** -> 选择 **自定义触发周期** -> 设置**corn表达式** -> **提交** 即完成设置
 
-3. Github Actions运行<br>
-    * fork本仓库 在 **.github/workflows** 文件夹下找到 **dailysign.yml**
-    * 打开yml文件 修改第3~5行代码为如下即可每天定时北京时间 8:00am 运行 (start时间受全球该时段workflow数量影响 一般会晚半小时左右)
-      ```Yml
-      on: 
-        schedule: 
-          - cron: '0 0 * * *'
-      ```
-     * 找到仓库 **Settings** -> **Secrets** -> **New repository secret** 根据参数说明**添加变量及变量值** 即完成设置
 
 ## 注意事项
 为避免过快请求触发检测机制 程序中相关延时设置较为保守 若发现云端执行时程序无法签到所有超话 可尝试以下方法 <br>
@@ -72,7 +74,6 @@ time.sleep(random.randint(5, 10))
 time.sleep(random.randint(15, 30))
 ```
 2. 使用 SIGN_TYPE 和 SIGN_LIST 参数对超话进行分批次签到 <br>
-3. 使用 Github Actions 运行脚本 <br>
 
 ## 注意事项2
 目前发现存在微博账号 其数据返回结构体与一般账号存在差异 会导致无法正确获取相关参数<br>
