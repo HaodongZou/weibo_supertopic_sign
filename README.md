@@ -1,8 +1,16 @@
 # 基于Python的微博超话签到脚本
 
-> 更新：支持青龙面板，前往[nodejs分支](https://github.com/Hellager/weibo_supertopic_sign/tree/nodejs)查看教程 
+> 更新：支持青龙面板，前往[nodejs分支](https://github.com/Hellager/weibo_supertopic_sign/tree/nodejs)查看教程
+> 
+> 再次更新： Python 版本现支持全部签到及多用户签到，请根据需要自定设置
 
-> 重要！：微博国际版升级为轻享版后无法抓包获取相关请求，请使用低版本进行抓包
+> 更正！：微博国际版升级为轻享版后仍可抓包，如是 ios 请使用 Stream， Thor 已废
+
+> 更新 ❗：由于未知原因，部分账号目前会触发验证，暂时无法通过脚本处理，部分情况下通过一次验证后当日不会再次触发
+
+> 更新！：若从未使用过微博轻享版(原国际版)签到过超话，请先手动签到至少一个，然后再尝试运行脚本，否则会有软件版本验证问题
+
+> 好消息✅：IOS 的同学可以试试这个 [捷径一键签到](https://weibo.com/1850606085/Mts8Kndqt) 由 [@dsttl3](https://weibo.com/u/1850606085) 出品
 
 ## 项目简介
 1. 基于Python实现微博超话关注列表的获取及签到
@@ -45,7 +53,15 @@ weibo_supertopic_sign/ <br>
 |DISP_TYPE(必需)| 结果是否展示等级信息 <br>DEFAULT -> 默认成功简略显示 <br>DETAIL-> 成功签到显示等级 |
 
 ## 更新说明
-2022-2-24 添加测试程序 方便调试纠错 <br>
+2022-9-17
+
+python 云函数分支 更新签到参数，支持多用户签到，全超话签到
+
+通过单次执行数量限制避免云函数超时，通过多次触发 cron 签到全部超话
+
+2022-2-24 
+
+添加测试程序 方便调试纠错 <br>
 &nbsp;&nbsp;&nbsp;&nbsp; 测试前填写好 test/config.json 中参数 直接运行test/test_index.py 即可
 &nbsp;&nbsp;&nbsp;&nbsp; 结果可在 test/data 文件夹中查看 均以 json 文件形式保存
 
@@ -59,7 +75,7 @@ weibo_supertopic_sign/ <br>
     python index.py
     ```
 2. 腾讯云函数运行 <br>
-    * 登录 **腾讯云**， 打开右上角 **控制台**， 找到 **我的资源** -> **云函数**，点击打开, 找到 **函数服务** -> **新建**， 选择 **自定义创建**， 设置 **函数名称**， 选择 **本地上传ZIP包**， 上传 [supertopic_sign_V1.0.3](https://pan.baidu.com/s/1g6uzlpHtP45C8W42_8ivrQ) 提取码 70ef，点击完成，完成新建云函数 <br>
+    * 登录 **腾讯云**， 打开右上角 **控制台**， 找到 **我的资源** -> **云函数**，点击打开, 找到 **函数服务** -> **新建**， 选择 **自定义创建**， 设置 **函数名称**， 选择 **本地上传ZIP包**， 上传 [supertopic_sign_v1.0.5](https://pan.baidu.com/s/1jS1KSpSXLLh_G_wWQK23mA) 提取码 dvl9，点击完成，完成新建云函数 <br>
     * 进入 **函数管理** -> **函数配置** -> 设置**执行超时时间** -> 设置**环境变量** <br>
     * 进入 **触发管理** -> **创建触发器** -> 选择 **自定义触发周期** -> 设置**corn表达式** -> **提交** 即完成设置
 
