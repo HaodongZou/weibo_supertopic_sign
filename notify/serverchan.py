@@ -51,10 +51,13 @@ class ServerChan(object):
 
         headers = {'Content-Type': 'application/x-www-form-urlencoded'}
         data = {
-            'text': '微博超话签到通知',
-            'desp': f'{content}'
+            'pushkey': f'{self.key}',
+            'text': '微博签到失败',
+            'desp': f'{content}',
+            'type': 'markdown'
         }
-        url = f"https://sctapi.ftqq.com/{self.key}.send"
+        # url = f"https://sctapi.ftqq.com/{self.key}.send"
+        url = "https://api2.pushdeer.com/message/push"
 
         response = requests.post(url, data=data, headers=headers)
 
